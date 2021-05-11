@@ -1,7 +1,7 @@
 #ifndef MONTY_H
 #define MONTY_H
 
-/*Libraries*/
+/* System Libraries*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -9,6 +9,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <fcntl.h>
+
+/* Our Libraries */
+#include "splits.h"
 
 /* variable */
 extern char number;
@@ -43,4 +46,4 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-#endif
+#endif /* MONTY_H */
