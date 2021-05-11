@@ -12,6 +12,7 @@
 
 /* Our Libraries */
 #include "splits.h"
+#include "aux_funcs.h"
 
 /* variable */
 extern char number;
