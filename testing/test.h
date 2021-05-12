@@ -56,9 +56,7 @@ int remove_commas(char **uwu);
 /* _splits2.c */
 void comms_pross(char *, int *, int *, int *, int *);
 
-/* aux_f2.c */
-int trash_chrs_amount(char **buff);
-char **cmds_cleaner(char **buff);
+/* functions.c */
 /* functions */
 void fpush(stack_t **stack, unsigned int line_number);
 void fpall(stack_t **stack, unsigned int line_number);
@@ -68,4 +66,5 @@ void fswap(stack_t **stack, unsigned int line_number);
 void fadd(stack_t **stack, unsigned int line_number);
 void fnop(stack_t **stack, unsigned int line_number);
 void free_stack(stack_t *stack);
+void tok_valid(char *tok_num, unsigned int line_number);
 #endif /* MONTY_H */
