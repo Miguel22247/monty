@@ -59,4 +59,7 @@ typedef struct line_list_s
 /* Our Libraries */
 #include "aux_funcs.h"
 
+/* Global Var to store the number */
+extern char *number;
+
 #endif /* MONTY_H */

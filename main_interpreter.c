@@ -1,6 +1,8 @@
 #include "monty.h"
 
-char number = '0';
+/* Global Var to store the number */
+char *number = "0";
+
 /**
 * main - Entry point
 * @argc: argument counter
@@ -11,6 +13,7 @@ int main(int argc, char **argv)
 {
 	FILE *monty_file;
 	line_list_t *head = NULL;
+	stack_t *stack = NULL;
 	char monty_line[100];
 
 	if (argc == 1 || argc > 2)
@@ -26,9 +29,7 @@ int main(int argc, char **argv)
 	while (fgets(monty_line, sizeof(monty_line), monty_file))
 		add_nodeline_end(&head, monty_line);
 	
-	mega_filter(head);
-
-
+	mega_filter(head, stack);
 
 	exit(EXIT_SUCCESS);
 }
