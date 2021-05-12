@@ -1,12 +1,12 @@
 #include "monty.h"
 
 /**
- * line_list_len - calculate the length of a list
+ * line_list_t_len - calculate the length of a list
  * @h: head node of the list
  * ----------------------------------
  * Return: ammount of elements in the list
 */
-size_t line_list_len(const line_list *h)
+size_t line_list_len(const line_list_t *h)
 {
 	size_t i = 0;
 
@@ -22,20 +22,23 @@ size_t line_list_len(const line_list *h)
 /**
  * add_dnodeint_end - add a new node at the end of a list
  * @head: the head node
- * @n: the int data of the node
+ * @str: the str data of the node
  * -------------------------------------------
  * Return: the new node
 */
-line_list *add_nodeline_end(line_list **head, const int n)
+line_list_t *add_nodeline_end(line_list_t **head, char *str)
 {
-	line_list *new = NULL;
-	line_list *current = NULL;
+	line_list_t *new = NULL;
+	line_list_t *current = NULL;
 
-	new = malloc(sizeof(line_list));
+	new = malloc(sizeof(line_list_t));
 	if (!new)
 		return (NULL);
 
-	new->n = n;
+	new->str = malloc(100 * sizeof(char));
+	if (!new->str)
+		return (NULL);
+	strcpy(new->str, str);
 	new->next = NULL;
 	new->prev = NULL;
 
@@ -65,9 +68,9 @@ line_list *add_nodeline_end(line_list **head, const int n)
  * @head: the head node to start cleanning
  * -------------------------------------------
 */
-void free_listline(line_list *head)
+void free_listline(line_list_t *head)
 {
-	line_list *aux = head;
+	line_list_t *aux = head;
 
 	while (head)
 	{
@@ -84,9 +87,9 @@ void free_listline(line_list *head)
  * --------------------------------------------
  * Return: the target node or NULL if nothing has been founded
 */
-line_list *get_nodeline_at_index(line_list *head, unsigned int index)
+line_list_t *get_nodeline_at_index(line_list_t *head, unsigned int index)
 {
-	line_list *target = NULL;
+	line_list_t *target = NULL;
 	unsigned int target_i = 0;
 
 	if (!head)
@@ -104,4 +107,24 @@ line_list *get_nodeline_at_index(line_list *head, unsigned int index)
 		return (NULL);
 
 	return (target);
+}
+
+/**
+ * print_dlistint - print a list
+ * @h: head node of the list
+ * ----------------------------------
+ * Return: ammount of elements in the list
+*/
+size_t print_dlistint(const line_list_t *h)
+{
+	size_t i = 0;
+
+	while (h != NULL)
+	{
+		i++;
+		printf("%s\n", h->str);
+		h = h->next;
+	}
+
+	return (i);
 }
