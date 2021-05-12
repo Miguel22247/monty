@@ -11,7 +11,6 @@
 #include <fcntl.h>
 
 /* Our Libraries */
-#include "splits.h"
 #include "aux_funcs.h"
 
 /* variable */
@@ -46,5 +45,15 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
+
+/* _splits1.c */
+char **_split(char *, char *c);
+int calc_lines(char *, char *c);
+void free_split(char **splitted);
+int check_split_line(char *, int, char *, int *, int *);
+int remove_commas(char **uwu);
+
+/* _splits2.c */
+void comms_pross(char *, int *, int *, int *, int *);
 
 #endif /* MONTY_H */

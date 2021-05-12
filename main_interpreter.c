@@ -1,4 +1,5 @@
 #include "monty.h"
+
 char number = '0';
 /**
 * main - Entry point
@@ -26,18 +27,17 @@ int main(int argc, char **argv)
 	fread(monty_content, 1, file_size, monty_file);
 
 	commands = _split(monty_content, " ");
+	printf("before cmds cleaner\n");
 	for (i = 0; commands[i]; i++)
 	{
-		if (strcmp(commands[i], "") != 0 && strcmp(commands[i], "\n") != 0)
-			printf("index: %d, %s\n", i, commands[i]);
+		printf("index: %d, %s\n", i, commands[i]);
 	}
-	printf("==========================================\n");
-	if (commands[14][0] != 0)
-		printf("%s\n", commands[14]);
-	printf("char: %c\n", commands[13][0]);
-	printf("int: %d\n", commands[13][0]);
-	if (strcmp(commands[14], "") == 0)
-		printf("Victory Royale\n");
+	cmds_cleaner(commands);
+	printf("before cmds cleaner\n");
+	for (i = 0; commands[i]; i++)
+	{
+		printf("index: %d, %s\n", i, commands[i]);
+	}
 
 	fclose(monty_file);
 	exit(EXIT_SUCCESS);
