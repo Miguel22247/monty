@@ -45,6 +45,20 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
+/**
+ * struct instruction_s - opcode and its function
+ * @opcode: the opcode
+ * @f: function to handle the opcode
+ *
+ * Description: opcode and its function
+ * for stack, queues, LIFO, FIFO Holberton project
+ */
+typedef struct line_list
+{
+	char *opcode;
+	struct line_list *next;
+	struct line_list *prev;
+} line_list;
 
 /* _splits1.c */
 char **_split(char *, char *c);

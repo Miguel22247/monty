@@ -1,151 +1,107 @@
 #include "monty.h"
 
 /**
- * _strlen - counts the length of a string
- * @str: the string
- * ---------------------------------
- * Return: the length of the string
-*/
-int _strlen(char *str)
-{
-	int i;
-
-	for (i = 0; str[i]; i++)
-        ;
-
-	return (i);
-}
-
-/**
- * p_strlen - counts the length of a strings array
- * @buff: the strings buff
+ * line_list_len - calculate the length of a list
+ * @h: head node of the list
  * ----------------------------------
- * Return: the length of the buffer
+ * Return: ammount of elements in the list
 */
-int p_strlen(char **buff)
+size_t line_list_len(const line_list *h)
 {
-	int i;
+	size_t i = 0;
 
-	for (i = 0; buff[i]; i++)
-		;
-	
+	while (h != NULL)
+	{
+		i++;
+		h = h->next;
+	}
+
 	return (i);
 }
 
 /**
-* _strcpy - copies a string
-* @src: the source string
-*
-* Return: A pointer to the copy of str
+ * add_dnodeint_end - add a new node at the end of a list
+ * @head: the head node
+ * @n: the int data of the node
+ * -------------------------------------------
+ * Return: the new node
 */
-char *_strcpy(char *src)
+line_list *add_nodeline_end(line_list **head, const int n)
 {
-	int i;
-	int src_len = strlen(src) + 1;
-	char *dest;
+	line_list *new = NULL;
+	line_list *current = NULL;
 
-	dest = malloc(src_len * sizeof(char));
-	if (!dest)
+	new = malloc(sizeof(line_list));
+	if (!new)
 		return (NULL);
 
-	for (i = 0; i < (src_len - 1); i++)
-		dest[i] = src[i];
-	dest[i] = '\0';
+	new->n = n;
+	new->next = NULL;
+	new->prev = NULL;
 
-	return (dest);
+	if (!head || !(*head))
+	{
+		*head = new;
+		return (new);
+	}
+
+	current = *head;
+	while (current)
+	{
+		if (!current->next)
+		{
+			new->prev = current;
+			current->next = new;
+			break;
+		}
+		current = current->next;
+	}
+
+	return (new);
 }
 
 /**
- * cmds_cleaner - cleanner of trash strings
- * @buff: the strings buffer to clean
- * ----------------------------------------
+ * free_dlistint - frees a list
+ * @head: the head node to start cleanning
+ * -------------------------------------------
 */
-char **cmds_cleaner(char **buff)
+void free_listline(line_list *head)
 {
-	int i, j = 0, trash_str = 0;
-	char **new_buff = NULL;
+	line_list *aux = head;
 
-	if (!buff)
-		return (NULL);
-
-	new_buff = malloc((p_strlen(buff) + 1) * sizeof(char *));
-	if (!new_buff)
-		return (NULL);
-
-	/* Move string per string */
-	for (i = 0; buff[i]; i++)
+	while (head)
 	{
-		trash_str = strcmp(buff[i], "") + strcmp(buff[i], "\n");
-		trash_str += strcmp(buff[i], "\t") + strcmp(buff[i], "\0");
-		/* Only add if the str is not a trash one */
-		if (trash_str != 0 && buff[i][0] != 0 && buff[i][0] != 10)
-			new_buff[j++] = _strcpy(buff[i]);
-		free(buff[i]);
+		head = head->next;
+		free(aux);
+		aux = head;
 	}
-	free(buff);
-	new_buff[j] = NULL;
-	strs_cleaner(&new_buff);
-
-	return (new_buff);
 }
 
 /**
- * strs_cleaner - clear all strs
- * @buff: the buffer to clean 
- * 
+ * get_dnodeint_at_index - returns a node at an index
+ * @head: the head node
+ * @index: the index to look at the node
+ * --------------------------------------------
+ * Return: the target node or NULL if nothing has been founded
 */
-void strs_cleaner(char ***buff)
+line_list *get_nodeline_at_index(line_list *head, unsigned int index)
 {
-	int i, j, k = 0, l, has_new_line = 0;
-	int calc_extra_room = trash_chrs_amount(*buff);
-	char ***new_segment = NULL, **buff_cpy = NULL;
+	line_list *target = NULL;
+	unsigned int target_i = 0;
 
-	/* Nothing to clean */
-	if (calc_extra_room == 0)
-		return;
-	new_segment = malloc((calc_extra_room + 1) * sizeof(char **));
-	if (!new_segment)
-		return;
+	if (!head)
+		return (NULL);
 
-	/* String per string */
-	for (i = 0; buff[0][i]; i++)
+	target = head;
+	while (target && target_i != index)
 	{
-		/* It's string char by char */
-		for (j = 0; buff[0][i][j] != '\0'; j++)
-		{
-			/* Trash found */
-			if (buff[0][i][j] == '\n')
-				new_segment[k++] = _split(buff[0][i], "\n");
-		}
+		target_i++;
+		target = target->next;
 	}
-	new_segment[k] = NULL;
 
-	buff_cpy = buff_cpy(&buff);
-	free(buff);
-	buff = malloc((p_strlen(buff_cpy) + calc_extra_room + 1) * sizeof(char *));
-	if (!buff)
-		return;
-	
-	for (i = 0; buff[0][i]; i++)
-	{
-		for (j = 0; buff[0][i][j] != '\0'; j++)
-		{
-			if (buff[0][i][j] == '\n')
-				has_new_line = 1;
-		}
+	/* Not index was found */
+	if (!target)
+		return (NULL);
 
-		if (has_new_line == 0)
-			buff[0][i] = buff_cpy[i];
-		else
-		{
-			/* Each group of string */
-			for (; new_segment[k]; k++)
-			{
-				/* Each string in that group */
-				for (l = 0; new_segment[k][l]; l++)
-					buff[0][i] = _strcpy(new_segment[k][l]);
-			}
-			has_new_line = 0;
-		}
-	}
+	return (target);
 }
