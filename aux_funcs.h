@@ -10,9 +10,16 @@ size_t print_list_line(const line_list_t *h);
 
 /* aux_f2.c */
 void mega_filter(line_list_t *h);
-void command_geiger(char **str, line_list_t *node, int vuelta);
+void command_geiger(char **str, char *sve, line_list_t *node, int vuelta);
 size_t print_stack(const stack_t *h);
 void cmds_error_check(char *str, char *num, line_list_t *node);
+/* EMPTY SLOT */
+
+/* aux_f3.c */
+void free_stack(stack_t *head);
+line_list_t *reach_head(line_list_t *node);
+/* EMPTY SLOT */
+/* EMPTY SLOT */
 /* EMPTY SLOT */
 
 /* in_f1.c */

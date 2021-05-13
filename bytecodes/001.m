@@ -1,10 +1,10 @@
 push 0 Push 0 onto the stack
-push ewe Push 1 onto the stack
+push  2 ush 1 onto the stack
 
 push 2
 	push 3
 									 pall    
-push s
+push 8
 					
 													 
 push 4

@@ -25,7 +25,7 @@ void mega_filter(line_list_t *h)
 		while (token)
 		{
 			vuelta++;
-			command_geiger(&token, cursor, vuelta);
+			command_geiger(&token, original_str_saver, cursor, vuelta);
 			token = strtok(NULL, " \n\t");
 		}
 
@@ -33,14 +33,15 @@ void mega_filter(line_list_t *h)
 		cursor = cursor->next;
 	}
 }
+
 /**
 * command_geiger - list all the functions
 * @str: string
 * @node: node
 * @vuelta: vuelta
-* Return: void
+* @sve: save
 */
-void command_geiger(char **str, line_list_t *node, int vuelta)
+void command_geiger(char **str, char *sve, line_list_t *node, int vuelta)
 {
 	int i;
 	char *number = NULL;
@@ -66,12 +67,9 @@ void command_geiger(char **str, line_list_t *node, int vuelta)
 				commands[i].f(&stack_h, 0);
 				return;
 			}
-
 			/* Ask for number */
 			number = strtok(NULL, " \n\t");
 			cmds_error_check(*str, number, node);
-
-			/* advance one token */
 			*str = number;
 			commands[i].f(&stack_h, atoi(number));
 			return;
@@ -80,6 +78,9 @@ void command_geiger(char **str, line_list_t *node, int vuelta)
 	if (vuelta == 1)
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n", node->line_n, *str);
+		free(sve);
+		free_stack(stack_h);
+		free_listline(reach_head(node));
 		exit(EXIT_FAILURE);
 	}
 }
@@ -115,6 +116,8 @@ void cmds_error_check(char *str, char *num, line_list_t *node)
 		}
 		fprintf(stderr, "L%d: unknown instruction %s\n", node->line_n,
 		commands[i].opcode);
+		free_stack(stack_h);
+		free_listline(reach_head(node));
 		exit(EXIT_FAILURE);
 	}
 }

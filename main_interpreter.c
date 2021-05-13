@@ -33,5 +33,7 @@ int main(int argc, char **argv)
 		add_nodeline_end(&head, monty_line);
 	mega_filter(head);
 
+	free_listline(head);
+	free_stack(stack_h);
 	exit(EXIT_SUCCESS);
 }
