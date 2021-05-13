@@ -62,7 +62,7 @@ void command_geiger(char **str, char *sve, line_list_t *node, int vuelta)
 		if (strcmp(*str, commands[i].opcode) == 0)
 		{
 			/* Commands that don't asks for numbers */
-			if (strcmp(*str, "pall") == 0)
+			if (strcmp(*str, "pall") == 0 || strcmp(*str, "pint") == 0)
 			{
 				commands[i].f(&stack_h, 0);
 				return;

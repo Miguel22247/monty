@@ -62,7 +62,12 @@ void fpush(stack_t **stack, unsigned int line_number)
 */
 void fpint(stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
-	printf("command pint %d executed\n", stack[0]->n);
+	stack_t *h = *stack;
+
+	while (h->next)
+		h = h->next;
+
+	printf("%d\n", h->n);
 }
 /**
  * fpop - Delete the head

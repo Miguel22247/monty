@@ -17,7 +17,8 @@ void fadd(stack_t **stack, __attribute__((unused))unsigned int line_number)
 * Return: nothing
 * Description: (void) es un puntero vacio
 */
-void fnop(stack_t **stack, __attribute__((unused))unsigned int line_number)
+void fnop(stack_t **stack, unsigned int line_number)
 {
-	printf("command snop %d executed\n", stack[0]->n);
+	stack = stack;
+	line_number = line_number;
 }
