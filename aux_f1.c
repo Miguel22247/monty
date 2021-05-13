@@ -36,6 +36,7 @@ line_list_t *add_nodeline_end(line_list_t **head, char *str)
 	if (!new)
 		return (NULL);
 
+
 	new->str = malloc((strlen(str) + 1) * sizeof(char));
 	if (!new->str)
 		return (NULL);

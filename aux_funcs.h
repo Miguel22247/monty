@@ -39,7 +39,7 @@ size_t stack_len(const stack_t *h);
 /* err_funcs1.c */
 void push_err(line_list_t *node, FILE *f);
 void pop_err(line_list_t *node, FILE *f);
-/* EMPTY SLOT */
+void pint_err(line_list_t *node, FILE *f);
 /* EMPTY SLOT */
 /* EMPTY SLOT */
 

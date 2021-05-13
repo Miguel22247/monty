@@ -40,7 +40,6 @@ void command_geiger(char **str, line_list_t *node, int vuelta, FILE *f)
 {
 	int i;
 	char *number = NULL;
-
 	instruction_t commands[] = {
 		{"pall", fpall},
 		{"push", fpush},
@@ -53,23 +52,24 @@ void command_geiger(char **str, line_list_t *node, int vuelta, FILE *f)
 	};
 
 	for (i = 0; commands[i].opcode; i++)
-	{
 		if (strcmp(*str, commands[i].opcode) == 0)
 		{
-			/* Commands that don't asks for numbers */
 			if (strcmp(*str, "pall") == 0 || strcmp(*str, "pint") == 0)
 			{
+				if (strcmp(*str, "pint") == 0)
+				{
+					if (!stack_h)
+						pint_err(node, f);
+				}
 				commands[i].f(&stack_h, 0);
 				return;
 			}
-			/* Ask for number */
 			number = strtok(NULL, " \n\t");
 			cmds_error_check(*str, number, node, f);
 			*str = number;
 			commands[i].f(&stack_h, atoi(number));
 			return;
 		}
-	}
 	if (vuelta == 1)
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n", node->line_n, *str);
@@ -94,7 +94,7 @@ void cmds_error_check(char *str, char *num, line_list_t *node, FILE *f)
 	error_t commands[] = {
 		{"pall", NULL},
 		{"push", push_err},
-		{"pint", NULL},
+		{"pint", pint_err},
 		{"pop", pop_err},
 		{"swap", NULL},
 		{"add", NULL},
