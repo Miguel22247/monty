@@ -62,40 +62,44 @@ void command_geiger(char **str, line_list_t *node)
 				commands[i].f(&stack_h, 0);
 				return;
 			}
+
 			/* Ask for number */
 			number = strtok(NULL, " \n\t");
-			if (atoi(number) == 0 && strcmp(number, "0") != 0)
-			{
-				if (strcmp(commands[i].opcode, "push") == 0)
-					push_err(node);
-				fprintf(stderr, "L%d: unknown instruction %s\n", node->line_n,
-				commands[i].opcode);
-				exit(EXIT_FAILURE);
-			}
+			cmds_error_check(*str, number, node);
+
 			/* advance one token */
 			*str = number;
 			commands[i].f(&stack_h, atoi(number));
-			return;
 		}
 	}
 }
-/**
-* print_stack - print the stack
-* @h: head
-* Return: stack
-*/
-size_t print_stack(const stack_t *h)
+
+void cmds_error_check(char *str, char *num, line_list_t *node)
 {
-	size_t i = 0;
+	int i;
+	error_t commands[] = {
+		{"pall", NULL},
+		{"push", push_err},
+		{"pint", NULL},
+		{"pop", NULL},
+		{"swap", NULL},
+		{"add", NULL},
+		{"nop", NULL},
+		{NULL, NULL}
+	};
 
-	while (h != NULL)
+	if (!num || (atoi(num) == 0 && strcmp(num, "0") != 0))
 	{
-		i++;
-		printf("%d\n", h->n);
-		h = h->next;
+		/* Navigate through errors and find it */
+		for (i = 0; commands[i].opcode; i++)
+		{
+			if (strcmp(str, commands[i].opcode) == 0)
+				commands[i].f(node);
+		}
+		fprintf(stderr, "L%d: unknown instruction %s\n", node->line_n,
+		commands[i].opcode);
+		exit(EXIT_FAILURE);
 	}
-
-	return (i);
 }
 
 /**
