@@ -1,82 +1,74 @@
 #include "monty.h"
 
 /**
-* _realloc - re size array
-* @ptr: string
-* @old_size: int
-* @new_size: uns int
-* ---------------------------------
-* Return: void pointer
+ * mega_filter - process the file commands
+ * @h: the linked list head
+ * ------------------------------
 */
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+void mega_filter(line_list_t *h, stack_t *stack)
 {
-	unsigned int i, cal;
-	char *p;
-	char *new_ptr;
+	line_list_t *cursor = h;
+	char *token = NULL, *original_str_saver = NULL;
 
-	if (ptr == NULL)
+	while (cursor)
 	{
-		p = malloc(new_size);
-		if (p == NULL)
-			return (NULL);
-		for (i = 0; i < new_size; i++)
-			p[i] = 0;
-		return (p);
-	}
-	else if (new_size == 0)
-	{
-		free(ptr);
-		return (NULL);
-	}
-	else if (new_size == old_size)
-		return (ptr);
-	if (new_size > old_size)
-		cal = old_size;
-	else
-		cal = new_size;
-	p = malloc(new_size);
-	if (p == NULL)
-		return (NULL);
-	new_ptr = ptr;
-	for (i = 0; i < cal; i++)
-		p[i] = new_ptr[i];
-	free(ptr);
-	return (p);
-}
+		original_str_saver = malloc((strlen(cursor->str) + 1) * sizeof(char));
+		if (!original_str_saver)
+			return;
+		strcpy(original_str_saver, cursor->str);
 
-int trash_chrs_amount(char **buff)
-{
-    int i, j, calc_extra_room = 0;
-
-    if (!buff)
-        return (0);
-
-	/* String per string */
-	for (i = 0; buff[i]; i++)
-	{
-		/* It's string char by char */
-		for (j = 0; buff[i][j] != '\0'; j++)
+		token = strtok(original_str_saver, " \n\t");
+		/* Navigate throgh line */
+		while (token)
 		{
-			if (buff[i][j] == '\n')
-				calc_extra_room++;
+			printf("part: %s\n", token);
+			command_geiger(&token, stack);
+			token = strtok(NULL, " \n\t");
 		}
-	}
 
-    return (calc_extra_room);
+		free(original_str_saver);
+		cursor = cursor->next;
+	}
 }
 
-char **buff_cpy(char **buff)
+void command_geiger(char **str, stack_t *stack)
 {
-	char **aux = NULL;
 	int i;
 
-	aux = malloc((p_strlen(buff) + 1) * sizeof(char *));
-	if (!aux)
-		return;
+	instruction_t commands[] = {
+		{"pall", fpall},
+		{"push", fpush},
+		{"pint", fpint},
+		{"pop", fpop},
+		{"swap", fswap},
+		{"add", fadd},
+		{"nop", fnop},
+		{NULL, NULL}
+	};
 
-	for (i = 0; buff[i]; i++)
-		aux[i] = _strcpy(buff[i]);	
-	aux[i] = NULL;
+	for (i = 0; commands[i].opcode; i++)
+	{
+		if (strcmp(*str, commands[i].opcode) == 0)
+		{
+			/* Commands that don't asks for numbers */
+			if (strcmp(commands[i].opcode, "pall") == 0)
+			{
+				commands[i].f(&stack, atoi(number));
+				return;
+			}
 
-	return (aux);
+			/* Ask for number */
+			number = strtok(NULL, " \n\t");
+			printf("number value: %s\n", number);
+			if (atoi(number) == 0 && strcmp(number, "0") != 0)
+			{
+				perror("Error: Syntax not correct\n");
+				exit(EXIT_FAILURE);
+			}
+			/* advance one token */
+			*str = number;
+			commands[i].f(&stack, atoi(number));
+			return;
+		}
+	}
 }
