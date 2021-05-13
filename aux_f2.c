@@ -8,10 +8,12 @@
 void mega_filter(line_list_t *h)
 {
 	line_list_t *cursor = h;
+	int vuelta;
 	char *token = NULL, *original_str_saver = NULL;
 
 	while (cursor)
 	{
+		vuelta = 0;
 		original_str_saver = malloc((strlen(cursor->str) + 1) * sizeof(char));
 		if (!original_str_saver)
 			return;
@@ -22,7 +24,8 @@ void mega_filter(line_list_t *h)
 		/* Navigate throgh line */
 		while (token)
 		{
-			command_geiger(&token, cursor);
+			vuelta++;
+			command_geiger(&token, cursor, vuelta);
 			token = strtok(NULL, " \n\t");
 		}
 
@@ -34,9 +37,10 @@ void mega_filter(line_list_t *h)
 * command_geiger - list all the functions
 * @str: string
 * @node: node
+* @vuelta: vuelta
 * Return: void
 */
-void command_geiger(char **str, line_list_t *node)
+void command_geiger(char **str, line_list_t *node, int vuelta)
 {
 	int i;
 	char *number = NULL;
@@ -70,7 +74,13 @@ void command_geiger(char **str, line_list_t *node)
 			/* advance one token */
 			*str = number;
 			commands[i].f(&stack_h, atoi(number));
+			return;
 		}
+	}
+	if (vuelta == 1)
+	{
+		fprintf(stderr, "L%d: unknown instruction %s\n", node->line_n, *str);
+		exit(EXIT_FAILURE);
 	}
 }
 

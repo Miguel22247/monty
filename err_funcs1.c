@@ -7,6 +7,6 @@
 */
 void push_err(line_list_t *node)
 {
-	fprintf(stderr, "L<%d>: usage: push integer\n", node->line_n);
+	fprintf(stderr, "L%d: usage: push integer\n", node->line_n);
 	exit(EXIT_FAILURE);
 }
