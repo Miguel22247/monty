@@ -5,7 +5,7 @@
  * @h: the linked list head
  * ------------------------------
 */
-void mega_filter(line_list_t *h, stack_t *stack)
+void mega_filter(line_list_t *h, stack_t **stack)
 {
 	line_list_t *cursor = h;
 	char *token = NULL, *original_str_saver = NULL;
@@ -18,6 +18,7 @@ void mega_filter(line_list_t *h, stack_t *stack)
 		strcpy(original_str_saver, cursor->str);
 
 		token = strtok(original_str_saver, " \n\t");
+
 		/* Navigate throgh line */
 		while (token)
 		{
@@ -31,7 +32,7 @@ void mega_filter(line_list_t *h, stack_t *stack)
 	}
 }
 
-void command_geiger(char **str, stack_t *stack)
+void command_geiger(char **str, stack_t **stack)
 {
 	int i;
 
@@ -53,7 +54,7 @@ void command_geiger(char **str, stack_t *stack)
 			/* Commands that don't asks for numbers */
 			if (strcmp(commands[i].opcode, "pall") == 0)
 			{
-				commands[i].f(&stack, atoi(number));
+				commands[i].f(stack, atoi(number));
 				return;
 			}
 
@@ -62,13 +63,27 @@ void command_geiger(char **str, stack_t *stack)
 			printf("number value: %s\n", number);
 			if (atoi(number) == 0 && strcmp(number, "0") != 0)
 			{
-				perror("Error: Syntax not correct\n");
+				fprintf(stderr, "L<line_number>: unknown instruction <opcode>");
 				exit(EXIT_FAILURE);
 			}
 			/* advance one token */
 			*str = number;
-			commands[i].f(&stack, atoi(number));
+			commands[i].f(stack, atoi(number));
 			return;
 		}
 	}
+}
+
+size_t print_stack(const stack_t *h)
+{
+	size_t i = 0;
+
+	while (h != NULL)
+	{
+		i++;
+		printf("%d\n", h->n);
+		h = h->next;
+	}
+
+	return (i);
 }

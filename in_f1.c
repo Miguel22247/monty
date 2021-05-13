@@ -5,9 +5,38 @@ void fpall(__attribute__((unused))stack_t **stack, __attribute__((unused))unsign
     printf("command pall executed\n");
 }
 
-void fpush(__attribute__((unused))stack_t **stack, __attribute__((unused))unsigned int line_number)
+void fpush(stack_t **stack, unsigned int line_number)
 {
-    printf("command push executed\n");     
+    stack_t *new = NULL;
+	stack_t *current = NULL;
+
+	new = malloc(sizeof(stack_t));
+	if (!new)
+		return;
+
+	new->n = line_number;
+	new->next = NULL;
+	new->prev = NULL;
+
+	if (!stack || !(*stack))
+	{
+		*stack = new;
+		return;
+	}
+
+	current = *stack;
+	while (current)
+	{
+		if (!current->next)
+		{
+			new->prev = current;
+			current->next = new;
+			break;
+		}
+		current = current->next;
+	}
+
+	return;
 }
 
 void fpint(__attribute__((unused))stack_t **stack, __attribute__((unused))unsigned int line_number)

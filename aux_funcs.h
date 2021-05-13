@@ -6,12 +6,12 @@ size_t line_list_len(const line_list_t *h);
 line_list_t *add_nodeline_end(line_list_t **head, char *str);
 void free_listline(line_list_t *head);
 line_list_t *get_nodeline_at_index(line_list_t *head, unsigned int index);
-size_t print_dlistint(const line_list_t *h);
+size_t print_list_line(const line_list_t *h);
 
 /* aux_f2.c */
-void mega_filter(line_list_t *h, stack_t *stack);
-void command_geiger(char **str, stack_t *stack);
-/* EMPTY SLOT */
+void mega_filter(line_list_t *h, stack_t **stack);
+void command_geiger(char **str, stack_t **stack);
+size_t print_stack(const stack_t *h);
 /* EMPTY SLOT */
 /* EMPTY SLOT */
 
