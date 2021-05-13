@@ -9,10 +9,10 @@ line_list_t *get_nodeline_at_index(line_list_t *head, unsigned int index);
 size_t print_list_line(const line_list_t *h);
 
 /* aux_f2.c */
-void mega_filter(line_list_t *h);
-void command_geiger(char **str, char *sve, line_list_t *node, int vuelta);
+void mega_filter(line_list_t *h, FILE *f);
+void command_geiger(char **str, line_list_t *node, int vuelta, FILE *f);
 size_t print_stack(const stack_t *h);
-void cmds_error_check(char *str, char *num, line_list_t *node);
+void cmds_error_check(char *str, char *num, line_list_t *node, FILE *f);
 /* EMPTY SLOT */
 
 /* aux_f3.c */
@@ -37,8 +37,8 @@ size_t stack_len(const stack_t *h);
 /* EMPTY SLOT */
 
 /* err_funcs1.c */
-void push_err(line_list_t *node);
-/* EMPTY SLOT */
+void push_err(line_list_t *node, FILE *f);
+void pop_err(line_list_t *node, FILE *f);
 /* EMPTY SLOT */
 /* EMPTY SLOT */
 /* EMPTY SLOT */

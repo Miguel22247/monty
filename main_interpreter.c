@@ -31,9 +31,10 @@ int main(int argc, char **argv)
 	/* Add all the file lines to the list */
 	while (fgets(monty_line, sizeof(monty_line), monty_file))
 		add_nodeline_end(&head, monty_line);
-	mega_filter(head);
+	mega_filter(head, monty_file);
 
 	free_listline(head);
 	free_stack(stack_h);
+	fclose(monty_file);
 	exit(EXIT_SUCCESS);
 }

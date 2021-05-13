@@ -5,31 +5,25 @@
  * @h: the linked list head
  * ------------------------------
 */
-void mega_filter(line_list_t *h)
+void mega_filter(line_list_t *h, FILE *f)
 {
 	line_list_t *cursor = h;
 	int vuelta;
-	char *token = NULL, *original_str_saver = NULL;
+	char *token = NULL;
 
 	while (cursor)
 	{
 		vuelta = 0;
-		original_str_saver = malloc((strlen(cursor->str) + 1) * sizeof(char));
-		if (!original_str_saver)
-			return;
-		strcpy(original_str_saver, cursor->str);
-
-		token = strtok(original_str_saver, " \n\t");
+		token = strtok(cursor->str, " \n\t");
 
 		/* Navigate throgh line */
 		while (token)
 		{
 			vuelta++;
-			command_geiger(&token, original_str_saver, cursor, vuelta);
+			command_geiger(&token, cursor, vuelta, f);
 			token = strtok(NULL, " \n\t");
 		}
 
-		free(original_str_saver);
 		cursor = cursor->next;
 	}
 }
@@ -41,7 +35,7 @@ void mega_filter(line_list_t *h)
 * @vuelta: vuelta
 * @sve: save
 */
-void command_geiger(char **str, char *sve, line_list_t *node, int vuelta)
+void command_geiger(char **str, line_list_t *node, int vuelta, FILE *f)
 {
 	int i;
 	char *number = NULL;
@@ -69,7 +63,7 @@ void command_geiger(char **str, char *sve, line_list_t *node, int vuelta)
 			}
 			/* Ask for number */
 			number = strtok(NULL, " \n\t");
-			cmds_error_check(*str, number, node);
+			cmds_error_check(*str, number, node, f);
 			*str = number;
 			commands[i].f(&stack_h, atoi(number));
 			return;
@@ -78,9 +72,9 @@ void command_geiger(char **str, char *sve, line_list_t *node, int vuelta)
 	if (vuelta == 1)
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n", node->line_n, *str);
-		free(sve);
 		free_stack(stack_h);
 		free_listline(reach_head(node));
+		fclose(f);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -92,14 +86,14 @@ void command_geiger(char **str, char *sve, line_list_t *node, int vuelta)
  * @node: the node where it command is executed
  * ------------------------------------------------------
 */
-void cmds_error_check(char *str, char *num, line_list_t *node)
+void cmds_error_check(char *str, char *num, line_list_t *node, FILE *f)
 {
 	int i;
 	error_t commands[] = {
 		{"pall", NULL},
 		{"push", push_err},
 		{"pint", NULL},
-		{"pop", NULL},
+		{"pop", pop_err},
 		{"swap", NULL},
 		{"add", NULL},
 		{"nop", NULL},
@@ -112,12 +106,13 @@ void cmds_error_check(char *str, char *num, line_list_t *node)
 		for (i = 0; commands[i].opcode; i++)
 		{
 			if (strcmp(str, commands[i].opcode) == 0)
-				commands[i].f(node);
+				commands[i].f(node, f);
 		}
 		fprintf(stderr, "L%d: unknown instruction %s\n", node->line_n,
 		commands[i].opcode);
 		free_stack(stack_h);
 		free_listline(reach_head(node));
+		fclose(f);
 		exit(EXIT_FAILURE);
 	}
 }

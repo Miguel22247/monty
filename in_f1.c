@@ -77,6 +77,9 @@ void fpint(stack_t **stack, __attribute__((unused))unsigned int line_number)
  */
 void fpop(stack_t **stack, unsigned int line_number)
 {
+	stack = stack;
+	line_number = line_number;
+	/*
 	if (stack == NULL || *stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
@@ -94,6 +97,7 @@ void fpop(stack_t **stack, unsigned int line_number)
 		free(*stack);
 		*stack = NULL;
 	}
+	*/
 }
 /**
 * fswap - swaps the top two elements of the stack.

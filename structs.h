@@ -57,7 +57,7 @@ typedef struct instruction_s
 typedef struct error_s
 {
 	char *opcode;
-	void (*f)(line_list_t *node);
+	void (*f)(line_list_t *node, FILE *f);
 } error_t;
 
 #endif /* STRUCTS_H */

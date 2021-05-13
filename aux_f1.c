@@ -79,6 +79,7 @@ void free_listline(line_list_t *head)
 	while (head)
 	{
 		head = head->next;
+		free(aux->str);
 		free(aux);
 		aux = head;
 	}
