@@ -77,6 +77,13 @@ void command_geiger(char **str, line_list_t *node, int vuelta, FILE *f)
 	}
 }
 
+/**
+* single_cmds_err_chk - check errors
+* @str: string
+* @node: node
+* @f: file
+* Return: void
+*/
 void single_cmds_err_chk(char *str, line_list_t *node, FILE *f)
 {
 	int i;
@@ -133,52 +140,4 @@ void cmds_error_check(char *str, char *num, line_list_t *node, FILE *f)
 		fclose(f);
 		exit(EXIT_FAILURE);
 	}
-}
-
-/**
- * get_stack_at_index - returns a node at an index
- * @head: the head node
- * @index: the index to look at the node
- * --------------------------------------------
- * Return: the target node or NULL if nothing has been founded
-*/
-stack_t *get_stack_at_index(stack_t *head, unsigned int index)
-{
-	stack_t *target = NULL;
-	unsigned int target_i = 0;
-
-	if (!head)
-		return (NULL);
-
-	target = head;
-	while (target && target_i != index)
-	{
-		target_i++;
-		target = target->next;
-	}
-
-	/* Not index was found */
-	if (!target)
-		return (NULL);
-
-	return (target);
-}
-
-/**
- * stack_len - calculate the length of a list
- * @h: head node of the list
- * ----------------------------------
- * Return: ammount of elements in the list
-*/
-size_t stack_len(const stack_t *h)
-{
-	size_t i = 0;
-
-	while (h != NULL)
-	{
-		i++;
-		h = h->next;
-	}
-
-	return (i);
 }

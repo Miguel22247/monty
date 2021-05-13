@@ -41,7 +41,7 @@ void pint_err(line_list_t *node, FILE *f)
 void pop_err(line_list_t *node, FILE *f)
 {
 	fprintf(stderr, "L%d: can't pop an empty stack\n", node->line_n);
-	
+
 	free_listline(reach_head(node));
 	free_stack(stack_h);
 	fclose(f);

@@ -1,6 +1,25 @@
 #include "monty.h"
 
 /**
+ * stack_len - calculate the length of a list
+ * @h: head node of the list
+ * ----------------------------------
+ * Return: ammount of elements in the list
+*/
+size_t stack_len(const stack_t *h)
+{
+	size_t i = 0;
+
+	while (h != NULL)
+	{
+		i++;
+		h = h->next;
+	}
+
+	return (i);
+}
+
+/**
 * print_stack - print the stack
 * @h: head
 * Return: stack
