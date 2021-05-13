@@ -5,7 +5,7 @@
 * @line_number: number of lines
 * Return: void
 */
-void fpall(__attribute__((unused))stack_t **stack, __attribute__((unused))unsigned int line_number)
+void fpall(stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
 	stack_t *aux = get_stack_at_index(*stack, stack_len(*stack) - 1);
 
@@ -14,7 +14,6 @@ void fpall(__attribute__((unused))stack_t **stack, __attribute__((unused))unsign
 		printf("%d\n", aux->n);
 		aux = aux->prev;
 	}
-
 }
 
 /**
@@ -53,8 +52,6 @@ void fpush(stack_t **stack, unsigned int line_number)
 		}
 		current = current->next;
 	}
-
-	return;
 }
 
 /**
@@ -63,9 +60,9 @@ void fpush(stack_t **stack, unsigned int line_number)
 * @line_number: number of lines
 * Return: void
 */
-void fpint(__attribute__((unused))stack_t **stack, __attribute__((unused))unsigned int line_number)
+void fpint(stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
-	printf("command pint executed\n");
+	printf("command pint %d executed\n", stack[0]->n);
 }
 /**
  * fpop - Delete the head
@@ -99,7 +96,7 @@ void fpop(stack_t **stack, unsigned int line_number)
 * @line_number: number of lines
 * Return: void
 */
-void fswap(__attribute__((unused))stack_t **stack, __attribute__((unused))unsigned int line_number)
+void fswap(stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
-
+	printf("command swap %d executed\n", stack[0]->n);
 }

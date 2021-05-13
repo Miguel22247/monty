@@ -62,14 +62,14 @@ void command_geiger(char **str, line_list_t *node)
 				commands[i].f(&stack_h, 0);
 				return;
 			}
-
 			/* Ask for number */
 			number = strtok(NULL, " \n\t");
 			if (atoi(number) == 0 && strcmp(number, "0") != 0)
 			{
 				if (strcmp(commands[i].opcode, "push") == 0)
 					push_err(node);
-				fprintf(stderr, "L%d: unknown instruction %s\n", node->line_n, commands[i].opcode);
+				fprintf(stderr, "L%d: unknown instruction %s\n", node->line_n,
+				commands[i].opcode);
 				exit(EXIT_FAILURE);
 			}
 			/* advance one token */
