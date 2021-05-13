@@ -45,7 +45,7 @@ line_list_t *reach_head(line_list_t *node)
 {
 	line_list_t *head = node;
 
-	while (!head->prev)
+	while (head->prev)
 		head = head->prev;
 
 	return (head);
