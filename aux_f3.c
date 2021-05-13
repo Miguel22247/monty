@@ -51,21 +51,26 @@ line_list_t *reach_head(line_list_t *node)
 	return (head);
 }
 
+/**
+* check_impostor_str - check if the string has an impostor
+* @str: string to be analized if contains an impostor
+* Return: an impostor(0) or not(1)
+*/
 int check_impostor_str(char *str)
 {
-    int i = 0;
+	int i = 0;
 
-    if (str[0] == '\0')
-        return (0);
+	if (str[0] == '\0')
+		return (0);
 
-    if (str[0] == '-' && (str[1] >= 48 && str[1] <= 57))
-        i = 1;
+	if (str[0] == '-' && (str[1] >= 48 && str[1] <= 57))
+		i = 1;
 
-    for (; str[i] != '\0'; i++)
-    {
-        if (str[i] < 48 || str[i] > 57)
-            return (0);
-    }
+	for (; str[i] != '\0'; i++)
+	{
+		if (str[i] < 48 || str[i] > 57)
+			return (0);
+	}
 
-    return (1);
+	return (1);
 }
