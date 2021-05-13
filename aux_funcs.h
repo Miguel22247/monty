@@ -34,7 +34,7 @@ void fadd(stack_t **stack, unsigned int line_number);
 void fnop(stack_t **stack, unsigned int line_number);
 stack_t *get_stack_at_index(stack_t *head, unsigned int index);
 size_t stack_len(const stack_t *h);
-/* EMPTY SLOT */
+void single_cmds_err_chk(char *str, line_list_t *node, FILE *f);
 
 /* err_funcs1.c */
 void push_err(line_list_t *node, FILE *f);

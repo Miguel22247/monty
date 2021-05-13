@@ -54,13 +54,10 @@ void command_geiger(char **str, line_list_t *node, int vuelta, FILE *f)
 	for (i = 0; commands[i].opcode; i++)
 		if (strcmp(*str, commands[i].opcode) == 0)
 		{
-			if (strcmp(*str, "pall") == 0 || strcmp(*str, "pint") == 0)
+			if (strcmp(*str, "pall") == 0 || strcmp(*str, "pint") == 0
+			|| strcmp(*str, "pop") == 0)
 			{
-				if (strcmp(*str, "pint") == 0)
-				{
-					if (!stack_h)
-						pint_err(node, f);
-				}
+				single_cmds_err_chk(*str, node, f);
 				commands[i].f(&stack_h, 0);
 				return;
 			}
@@ -77,6 +74,25 @@ void command_geiger(char **str, line_list_t *node, int vuelta, FILE *f)
 		free_listline(reach_head(node));
 		fclose(f);
 		exit(EXIT_FAILURE);
+	}
+}
+
+void single_cmds_err_chk(char *str, line_list_t *node, FILE *f)
+{
+	int i;
+	error_t commands[] = {
+		{"pop", pop_err},
+		{"pint", pop_err},
+		{NULL, NULL}
+	};
+
+	for (i = 0; commands[i].opcode; i++)
+	{
+		if (strcmp(str, commands[i].opcode) == 0)
+		{
+			if (!stack_h)
+				commands[i].f(node, f);
+		}
 	}
 }
 
