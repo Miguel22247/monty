@@ -10,7 +10,7 @@ size_t print_dlistint(const line_list_t *h);
 
 /* aux_f2.c */
 void mega_filter(line_list_t *h, stack_t *stack);
-void command_geiger(char *str, stack_t *stack);
+void command_geiger(char **str, stack_t *stack);
 /* EMPTY SLOT */
 /* EMPTY SLOT */
 /* EMPTY SLOT */

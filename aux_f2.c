@@ -8,25 +8,30 @@
 void mega_filter(line_list_t *h, stack_t *stack)
 {
 	line_list_t *cursor = h;
-	char *token = NULL;
+	char *token = NULL, *original_str_saver = NULL;
 
 	while (cursor)
 	{
-		token = strtok(cursor->str, " \n\t");
-		/* Navigate throgh commands */
+		original_str_saver = malloc((strlen(cursor->str) + 1) * sizeof(char));
+		if (!original_str_saver)
+			return;
+		strcpy(original_str_saver, cursor->str);
+
+		token = strtok(original_str_saver, " \n\t");
+		/* Navigate throgh line */
 		while (token)
 		{
-			command_geiger(token, stack);
-
 			printf("part: %s\n", token);
+			command_geiger(&token, stack);
 			token = strtok(NULL, " \n\t");
 		}
 
+		free(original_str_saver);
 		cursor = cursor->next;
 	}
 }
 
-void command_geiger(char *str, stack_t *stack)
+void command_geiger(char **str, stack_t *stack)
 {
 	int i;
 
@@ -43,14 +48,25 @@ void command_geiger(char *str, stack_t *stack)
 
 	for (i = 0; commands[i].opcode; i++)
 	{
-		if (strcmp(str, commands[i].opcode) == 0)
+		if (strcmp(*str, commands[i].opcode) == 0)
 		{
+			/* Commands that don't asks for numbers */
+			if (strcmp(commands[i].opcode, "pall") == 0)
+			{
+				commands[i].f(&stack, atoi(number));
+				return;
+			}
+
+			/* Ask for number */
 			number = strtok(NULL, " \n\t");
-			if (number == 0 && strcmp(number, "0") != 0)
+			printf("number value: %s\n", number);
+			if (atoi(number) == 0 && strcmp(number, "0") != 0)
 			{
 				perror("Error: Syntax not correct\n");
 				exit(EXIT_FAILURE);
 			}
+			/* advance one token */
+			*str = number;
 			commands[i].f(&stack, atoi(number));
 			return;
 		}
