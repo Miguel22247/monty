@@ -37,7 +37,7 @@ void free_stack(stack_t *head)
 }
 
 /**
-* reach_read - go to the head of every node
+* reach_head - go to the head of every node
 * @node: node to be reached
 * Return: head node
 */
