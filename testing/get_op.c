@@ -1,4 +1,4 @@
-#include "test.h"
+#include "monty.h"
 
 int get_op(stack_t **stack, char *tok_op, unsigned int line_number)
 {
