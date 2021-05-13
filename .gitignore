@@ -2,6 +2,7 @@ test/
 testing/
 0x17-doubly_linked_lists/
 monty
+betty.sh
 .vscode/
 objectives.txt
 a.out

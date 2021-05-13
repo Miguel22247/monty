@@ -74,6 +74,13 @@ void command_geiger(char **str, line_list_t *node)
 	}
 }
 
+/**
+ * cmds_error_check - Checks if the command is well typed
+ * @str: the command token
+ * @num: the next token.. normally a number
+ * @node: the node where it command is executed
+ * ------------------------------------------------------
+*/
 void cmds_error_check(char *str, char *num, line_list_t *node)
 {
 	int i;
