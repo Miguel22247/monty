@@ -5,7 +5,7 @@
  * @h: the linked list head
  * ------------------------------
 */
-void mega_filter(line_list_t *h, stack_t **stack)
+void mega_filter(line_list_t *h)
 {
 	line_list_t *cursor = h;
 	char *token = NULL, *original_str_saver = NULL;
@@ -22,8 +22,7 @@ void mega_filter(line_list_t *h, stack_t **stack)
 		/* Navigate throgh line */
 		while (token)
 		{
-			printf("part: %s\n", token);
-			command_geiger(&token, stack);
+			command_geiger(&token, cursor);
 			token = strtok(NULL, " \n\t");
 		}
 
@@ -32,9 +31,10 @@ void mega_filter(line_list_t *h, stack_t **stack)
 	}
 }
 
-void command_geiger(char **str, stack_t **stack)
+void command_geiger(char **str, line_list_t *node)
 {
 	int i;
+	char *number = NULL;
 
 	instruction_t commands[] = {
 		{"pall", fpall},
@@ -52,23 +52,24 @@ void command_geiger(char **str, stack_t **stack)
 		if (strcmp(*str, commands[i].opcode) == 0)
 		{
 			/* Commands that don't asks for numbers */
-			if (strcmp(commands[i].opcode, "pall") == 0)
+			if (strcmp(*str, "pall") == 0)
 			{
-				commands[i].f(stack, atoi(number));
+				commands[i].f(&stack_h, 0);
 				return;
 			}
 
 			/* Ask for number */
 			number = strtok(NULL, " \n\t");
-			printf("number value: %s\n", number);
 			if (atoi(number) == 0 && strcmp(number, "0") != 0)
 			{
-				fprintf(stderr, "L<line_number>: unknown instruction <opcode>");
+				if (strcmp(commands[i].opcode, "push") == 0)
+					push_err(node);
+				fprintf(stderr, "L%d: unknown instruction %s\n", node->line_n, commands[i].opcode);
 				exit(EXIT_FAILURE);
 			}
 			/* advance one token */
 			*str = number;
-			commands[i].f(stack, atoi(number));
+			commands[i].f(&stack_h, atoi(number));
 			return;
 		}
 	}
@@ -82,6 +83,54 @@ size_t print_stack(const stack_t *h)
 	{
 		i++;
 		printf("%d\n", h->n);
+		h = h->next;
+	}
+
+	return (i);
+}
+
+/**
+ * get_stack_at_index - returns a node at an index
+ * @head: the head node
+ * @index: the index to look at the node
+ * --------------------------------------------
+ * Return: the target node or NULL if nothing has been founded
+*/
+stack_t *get_stack_at_index(stack_t *head, unsigned int index)
+{
+	stack_t *target = NULL;
+	unsigned int target_i = 0;
+
+	if (!head)
+		return (NULL);
+
+	target = head;
+	while (target && target_i != index)
+	{
+		target_i++;
+		target = target->next;
+	}
+
+	/* Not index was found */
+	if (!target)
+		return (NULL);
+
+	return (target);
+}
+
+/**
+ * line_list_t_len - calculate the length of a list
+ * @h: head node of the list
+ * ----------------------------------
+ * Return: ammount of elements in the list
+*/
+size_t stack_len(const stack_t *h)
+{
+	size_t i = 0;
+
+	while (h != NULL)
+	{
+		i++;
 		h = h->next;
 	}
 

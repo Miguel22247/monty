@@ -52,6 +52,7 @@ typedef struct instruction_s
 typedef struct line_list_s
 {
 	char *str;
+	int line_n;
 	struct line_list_s *prev;
 	struct line_list_s *next;
 } line_list_t;
@@ -59,7 +60,7 @@ typedef struct line_list_s
 /* Our Libraries */
 #include "aux_funcs.h"
 
-/* Global Var to store the number */
-extern char *number;
+/* Global Var to store (Stack Head) */
+extern stack_t *stack_h;
 
 #endif /* MONTY_H */

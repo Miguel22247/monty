@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /* Global Var to store the number */
-char *number = "0";
+stack_t *stack_h = NULL;
 
 /**
 * main - Entry point
@@ -13,8 +13,7 @@ int main(int argc, char **argv)
 {
 	FILE *monty_file;
 	line_list_t *head = NULL;
-	stack_t *stack = NULL;
-	char monty_line[100], error[100];
+	char monty_line[100];
 
 	if (argc == 1 || argc > 2)
 	{
@@ -25,18 +24,16 @@ int main(int argc, char **argv)
 	monty_file = fopen(argv[1], "r");
 	if (!monty_file)
 	{
-		strcpy(error, "Unable to open the file ");
-		strcat(error, argv[1]);
-		perror(error);
+		fprintf(stderr, "Unable to open the file %s\n", argv[1]);
 		exit (EXIT_FAILURE);
 	}
 
 	/* Add all the file lines to the list */
 	while (fgets(monty_line, sizeof(monty_line), monty_file))
 		add_nodeline_end(&head, monty_line);
-	mega_filter(head, &stack);
-	printf("==========================\n");
-	print_stack(stack);
+	print_list_line(head);
+	mega_filter(head);
+	print_stack(stack_h);
 
 	exit(EXIT_SUCCESS);
 }

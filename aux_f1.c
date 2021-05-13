@@ -30,6 +30,7 @@ line_list_t *add_nodeline_end(line_list_t **head, char *str)
 {
 	line_list_t *new = NULL;
 	line_list_t *current = NULL;
+	int line_position = 1;
 
 	new = malloc(sizeof(line_list_t));
 	if (!new)
@@ -39,6 +40,7 @@ line_list_t *add_nodeline_end(line_list_t **head, char *str)
 	if (!new->str)
 		return (NULL);
 	strcpy(new->str, str);
+	new->line_n = line_position;
 	new->next = NULL;
 	new->prev = NULL;
 
@@ -53,10 +55,12 @@ line_list_t *add_nodeline_end(line_list_t **head, char *str)
 	{
 		if (!current->next)
 		{
+			new->line_n = line_position + 1;
 			new->prev = current;
 			current->next = new;
 			break;
 		}
+		line_position++;
 		current = current->next;
 	}
 
@@ -110,21 +114,26 @@ line_list_t *get_nodeline_at_index(line_list_t *head, unsigned int index)
 }
 
 /**
- * print_dlistint - print a list
+ * print_list_line - print a list
  * @h: head node of the list
  * ----------------------------------
- * Return: ammount of elements in the list
+ *Return: ammount of elements in the list
 */
-size_t print_dlistint(const line_list_t *h)
+size_t print_list_line(const line_list_t *h)
 {
 	size_t i = 0;
+
+	printf("==== Printing list of lines ====\n");
 
 	while (h != NULL)
 	{
 		i++;
-		printf("%s\n", h->str);
+		printf("line: %s", h->str);
+		printf("number: %d\n", h->line_n);
 		h = h->next;
 	}
+
+	printf("===========================\n");
 
 	return (i);
 }
