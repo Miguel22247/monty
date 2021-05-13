@@ -30,7 +30,7 @@ size_t stack_len(const stack_t *h);
 /* EMPTY SLOT */
 
 /* err_funcs1.c */
-void push_err();
+void push_err(line_list_t *node);
 /* EMPTY SLOT */
 /* EMPTY SLOT */
 /* EMPTY SLOT */

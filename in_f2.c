@@ -7,8 +7,9 @@
 */
 void fadd(__attribute__((unused))stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
-    printf("command add executed\n");
+	printf("command add executed\n");
 }
+
 /**
 * fnop - doesn't do anything
 * @stack: stack
@@ -18,8 +19,8 @@ void fadd(__attribute__((unused))stack_t **stack, __attribute__((unused))unsigne
 */
 void fnop(__attribute__((unused))stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
-    /*
-    (void) *stack;
+	/*
+	(void) *stack;
 	(void) line_number;
-    */
+	*/
 }

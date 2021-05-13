@@ -25,15 +25,13 @@ int main(int argc, char **argv)
 	if (!monty_file)
 	{
 		fprintf(stderr, "Unable to open the file %s\n", argv[1]);
-		exit (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 
 	/* Add all the file lines to the list */
 	while (fgets(monty_line, sizeof(monty_line), monty_file))
 		add_nodeline_end(&head, monty_line);
-	print_list_line(head);
 	mega_filter(head);
-	print_stack(stack_h);
 
 	exit(EXIT_SUCCESS);
 }

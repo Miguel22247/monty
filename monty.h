@@ -41,15 +41,16 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 /**
- * struct line_lst - lines amount
+ * struct line_list_s - lines amount
  * @str: the line
  * @prev: points to the previous element of the list
  * @next: points to the next element of the list
+ * @line_n: new line?
  *
  * Description: opcode and its function
  * for stack, queues, LIFO, FIFO Holberton project
  */
-typedef struct line_list_s
+ typedef struct line_list_s
 {
 	char *str;
 	int line_n;

@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- * line_list_t_len - calculate the length of a list
+ * line_list_len - calculate the length of a list
  * @h: head node of the list
  * ----------------------------------
  * Return: ammount of elements in the list
@@ -20,7 +20,7 @@ size_t line_list_len(const line_list_t *h)
 }
 
 /**
- * add_dnodeint_end - add a new node at the end of a list
+ * add_nodeline_end - add a new node at the end of a list
  * @head: the head node
  * @str: the str data of the node
  * -------------------------------------------
@@ -68,7 +68,7 @@ line_list_t *add_nodeline_end(line_list_t **head, char *str)
 }
 
 /**
- * free_dlistint - frees a list
+ * free_listline - frees a list
  * @head: the head node to start cleanning
  * -------------------------------------------
 */
@@ -85,7 +85,7 @@ void free_listline(line_list_t *head)
 }
 
 /**
- * get_dnodeint_at_index - returns a node at an index
+ * get_nodeline_at_index - returns a node at an index
  * @head: the head node
  * @index: the index to look at the node
  * --------------------------------------------

@@ -5,19 +5,16 @@
 * @line_number: number of lines
 * Return: void
 */
-void fpall(stack_t **stack, __attribute__((unused))unsigned int line_number)
+void fpall(__attribute__((unused))stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
-	stack_t *head_node = get_stack_at_index(*stack, 0);
-	stack_t *last_node = get_stack_at_index(*stack, stack_len(*stack) - 1);
-	stack_t *last_prev = last_node->prev;
+	stack_t *aux = get_stack_at_index(*stack, stack_len(*stack) - 1);
 
-	last_node->next = head_node->next;
-	last_node->prev = NULL;
+	while (aux)
+	{
+		printf("%d\n", aux->n);
+		aux = aux->prev;
+	}
 
-	last_prev->next = head_node;
-	head_node->prev = last_prev;
-	head_node->next = NULL;
-	*stack = last_node; /* In reality last node is the head */
 }
 
 /**
@@ -71,7 +68,7 @@ void fpint(__attribute__((unused))stack_t **stack, __attribute__((unused))unsign
 	printf("command pint executed\n");
 }
 /**
- * pop_listint - Delete the head
+ * fpop - Delete the head
  * @stack: pointer to the head node
  * @line_number: line number
  * Return: Nothing
@@ -84,7 +81,7 @@ void fpop(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	if((*stack)->next != NULL)
+	if ((*stack)->next != NULL)
 	{
 		*stack = (*stack)->next;
 		free((*stack)->prev);

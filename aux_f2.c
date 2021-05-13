@@ -30,7 +30,12 @@ void mega_filter(line_list_t *h)
 		cursor = cursor->next;
 	}
 }
-
+/**
+* command_geiger - list all the functions
+* @str: string
+* @node: node
+* Return: void
+*/
 void command_geiger(char **str, line_list_t *node)
 {
 	int i;
@@ -74,7 +79,11 @@ void command_geiger(char **str, line_list_t *node)
 		}
 	}
 }
-
+/**
+* print_stack - print the stack
+* @h: head
+* Return: stack
+*/
 size_t print_stack(const stack_t *h)
 {
 	size_t i = 0;
@@ -119,7 +128,7 @@ stack_t *get_stack_at_index(stack_t *head, unsigned int index)
 }
 
 /**
- * line_list_t_len - calculate the length of a list
+ * stack_len - calculate the length of a list
  * @h: head node of the list
  * ----------------------------------
  * Return: ammount of elements in the list
