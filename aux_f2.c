@@ -102,7 +102,7 @@ void cmds_error_check(char *str, char *num, line_list_t *node, FILE *f)
 		{NULL, NULL}
 	};
 
-	if (!num || (atoi(num) == 0 && strcmp(num, "0") != 0))
+	if (!num || (check_impostor_str(num) == 0))
 	{
 		/* Navigate through errors and find it */
 		for (i = 0; commands[i].opcode; i++)

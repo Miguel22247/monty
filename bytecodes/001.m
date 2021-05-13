@@ -1,4 +1,6 @@
-push|1
-push eeee
+pall
+push -23
+pall
 push 3 
 pall
+

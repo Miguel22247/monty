@@ -18,7 +18,7 @@ void cmds_error_check(char *str, char *num, line_list_t *node, FILE *f);
 /* aux_f3.c */
 void free_stack(stack_t *head);
 line_list_t *reach_head(line_list_t *node);
-/* EMPTY SLOT */
+int check_impostor_str(char *str);
 /* EMPTY SLOT */
 /* EMPTY SLOT */
 

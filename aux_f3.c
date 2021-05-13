@@ -50,3 +50,22 @@ line_list_t *reach_head(line_list_t *node)
 
 	return (head);
 }
+
+int check_impostor_str(char *str)
+{
+    int i = 0;
+
+    if (str[0] == '\0')
+        return (0);
+
+    if (str[0] == '-' && (str[1] >= 48 && str[1] <= 57))
+        i = 1;
+
+    for (; str[i] != '\0'; i++)
+    {
+        if (str[i] < 48 || str[i] > 57)
+            return (0);
+    }
+
+    return (1);
+}
