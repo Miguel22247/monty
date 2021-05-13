@@ -79,24 +79,24 @@ void fpop(stack_t **stack, unsigned int line_number)
 {
 	stack = stack;
 	line_number = line_number;
-	/*
-	if (stack == NULL || *stack == NULL)
-	{
-		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
-		exit(EXIT_FAILURE);
-	}
+	/**
+	* if (stack == NULL || *stack == NULL)
+	* {
+	*	fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+	*	exit(EXIT_FAILURE);
+	* }
 
-	if ((*stack)->next != NULL)
-	{
-		*stack = (*stack)->next;
-		free((*stack)->prev);
-		(*stack)->prev = NULL;
-	}
-	else
-	{
-		free(*stack);
-		*stack = NULL;
-	}
+	* if ((*stack)->next != NULL)
+	* {
+	*	*stack = (*stack)->next;
+	*	free((*stack)->prev);
+	*	(*stack)->prev = NULL;
+	* }
+	* else
+	* {
+	*	free(*stack);
+	*	*stack = NULL;
+	* }
 	*/
 }
 /**

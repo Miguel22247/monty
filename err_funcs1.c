@@ -17,7 +17,7 @@ void push_err(line_list_t *node, FILE *f)
 }
 
 /**
- * push_err - when a push is wrong typed
+ * pop_err - when a push is wrong typed
  * @node: the node where push failed
  * @f: file to close
  * -----------------------------------------

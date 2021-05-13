@@ -3,6 +3,7 @@
 /**
  * mega_filter - process the file commands
  * @h: the linked list head
+ * @f: file to close
  * ------------------------------
 */
 void mega_filter(line_list_t *h, FILE *f)
@@ -33,7 +34,7 @@ void mega_filter(line_list_t *h, FILE *f)
 * @str: string
 * @node: node
 * @vuelta: vuelta
-* @sve: save
+* @f: file to close
 */
 void command_geiger(char **str, line_list_t *node, int vuelta, FILE *f)
 {
@@ -84,6 +85,7 @@ void command_geiger(char **str, line_list_t *node, int vuelta, FILE *f)
  * @str: the command token
  * @num: the next token.. normally a number
  * @node: the node where it command is executed
+ * @f: file to close
  * ------------------------------------------------------
 */
 void cmds_error_check(char *str, char *num, line_list_t *node, FILE *f)
